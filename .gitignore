@@ -1,0 +1,14 @@
+
+code/.terraform.lock.hcl
+code/.terraform/modules/eks.kms/
+code/.terraform/modules/eks/
+code/.terraform/modules/modules.json
+code/.terraform/modules/vpc/
+code/.terraform/providers/registry.terraform.io/hashicorp/aws/5.81.0/windows_amd64/LICENSE.txt
+code/.terraform/providers/registry.terraform.io/hashicorp/aws/5.81.0/windows_amd64/terraform-provider-aws_v5.81.0_x5.exe
+code/.terraform/providers/registry.terraform.io/hashicorp/cloudinit/2.3.5/windows_amd64/LICENSE.txt
+code/.terraform/providers/registry.terraform.io/hashicorp/cloudinit/2.3.5/windows_amd64/terraform-provider-cloudinit_v2.3.5_x5.exe
+code/.terraform/providers/registry.terraform.io/hashicorp/null/3.2.3/windows_amd64/LICENSE.txt
+code/.terraform/providers/registry.terraform.io/hashicorp/null/3.2.3/windows_amd64/terraform-provider-null_v3.2.3_x5.exe
+code/.terraform/providers/registry.terraform.io/hashicorp/tls/4.0.6/windows_amd64/LICENSE.txt
+code/.terraform/providers/registry.terraform.io/hashicorp/tls/4.0.6/windows_amd64/terraform-provider-tls_v4.0.6_x5.exe

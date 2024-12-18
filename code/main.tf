@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-west-2" # Replace with your preferred region
+  region = "us-west-2"
 }
 
 module "eks" {

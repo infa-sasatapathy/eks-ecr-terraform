@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saumikdemo-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: saumikdemo
+  template:
+    metadata:
+      labels:
+        app: saumikdemo
+    spec:
+      containers:
+        - name: saumikdemo-container
+          image: 730335492879.dkr.ecr.us-east-1.amazonaws.com/saumikdemo:latest
+          ports:
+            - containerPort: 3000
+      imagePullSecrets:
+        - name: ecr-creds

@@ -14,8 +14,12 @@ spec:
     spec:
       containers:
         - name: saumikdemo-container
-          image: 730335492879.dkr.ecr.us-east-1.amazonaws.com/saumikdemo:latest
+          #image: 891376921871.dkr.ecr.us-east-1.amazonaws.com/saumikdemo:latest
+          image: saumik8763/saumikdemo:latest
           ports:
             - containerPort: 3000
-      imagePullSecrets:
-        - name: ecr-creds
+          env:
+            - name: SECRET_WORD
+              value: "saumik"
+#      imagePullSecrets:
+#        - name: ecr-creds

@@ -1,0 +1,71 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'DOCKERFILE', defaultValue: 'Dockerfile', description: 'Dockerfile to use')
+        string(name: 'ECR_REPO_NAME', defaultValue: 'saumikdemo', description: 'ECR Repository Name')
+    }
+    environment {
+        AWS_REGION = 'us-east-1'
+        AWS_ACCOUNT_ID = '730335492879'
+        ECR_URL = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${params.ECR_REPO_NAME}"
+    }
+    stages {
+        stage('Checkout Code') {
+            steps {
+                git url: 'https://github.com/infa-sasatapathy/eks-ecr-terraform.git'
+            }
+        }
+
+        stage('Terraform Init & Apply') {
+            steps {
+                dir('terraform') {
+                    sh '''
+                        terraform init
+                        terraform apply -auto-approve
+                    '''
+                }
+            }
+        }
+
+        stage('Login to ECR') {
+            steps {
+                sh '''
+                    aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_URL}
+                '''
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                    docker build -t ${params.ECR_REPO_NAME}:latest -f ${params.DOCKERFILE} .
+                '''
+            }
+        }
+
+        stage('Tag Docker Image') {
+            steps {
+                sh '''
+                    docker tag ${params.ECR_REPO_NAME}:latest ${ECR_URL}:latest
+                '''
+            }
+        }
+
+        stage('Push Docker Image to ECR') {
+            steps {
+                sh '''
+                    docker push ${ECR_URL}:latest
+                '''
+            }
+        }
+
+        stage('Deploy to EKS') {
+            steps {
+                sh '''
+                    aws eks --region ${AWS_REGION} update-kubeconfig --name eks-cluster
+                    kubectl apply -f k8s/
+                '''
+            }
+        }
+    }
+}

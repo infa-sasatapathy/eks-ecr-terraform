@@ -39,7 +39,7 @@ EOF
 resource "null_resource" "build_and_push_image" {
   provisioner "local-exec" {
     command = <<EOT
-aws ecr get-login-password --region ${var.aws_region} | ocker login --username AWS --password-stdin ${local.ecr_url}
+aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${local.ecr_url}
 docker build -t ${var.ecr_repo_name} ../
 docker tag ${var.ecr_repo_name}:latest ${local.ecr_url}:latest
 docker push ${local.ecr_url}:latest

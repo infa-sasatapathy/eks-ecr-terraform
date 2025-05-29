@@ -39,6 +39,9 @@ EOF
 resource "null_resource" "build_and_push_image" {
   provisioner "local-exec" {
     command = <<EOT
+sudo usermod -aG docker $USER
+newgrp docker
+exec sudo su -l $USER
 aws ecr get-login-password --region ${var.aws_region} | docker login --username AWS --password-stdin ${local.ecr_url}
 docker build -t ${var.ecr_repo_name} ../
 docker tag ${var.ecr_repo_name}:latest ${local.ecr_url}:latest

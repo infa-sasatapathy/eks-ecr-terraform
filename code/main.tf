@@ -20,6 +20,21 @@ module "eks" {
 }
 }
 
+data "aws_iam_user" "cloud_user" {
+  user_name = "cloud_user"
+}
+
+resource "aws_iam_user_policy_attachment" "eks_admin" {
+  user       = data.aws_iam_user.cloud_user.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSAdminPolicy"
+}
+
+resource "aws_iam_user_policy_attachment" "eks_cluster_admin" {
+  user       = data.aws_iam_user.cloud_user.user_name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterAdminPolicy"
+}
+
+
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "~> 5.0"
@@ -36,3 +51,4 @@ module "vpc" {
 locals {
   ecr_url = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com/${var.ecr_repo_name}"
 }
+

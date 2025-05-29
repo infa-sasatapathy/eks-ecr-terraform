@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
         - name: saumikdemo-container
-          image: 891376921871.dkr.ecr.us-east-1.amazonaws.com/saumikdemo:latest
+          image: 471112955271.dkr.ecr.us-east-1.amazonaws.com/my-private-ecr:latest 
+          image: 851725399864.dkr.ecr.us-east-1.amazonaws.com/my-private-ecr:latest
           #image: saumik8763/saumikdemo:latest
           ports:
             - containerPort: 3000
